@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<!-- Robot tipo triciclo con 3 grados de libertad en archivo URDF: 
+    - 2 ruedas traseras para propulsion
+    - 1 horquilla delantera para direccion rotacional
+    - 1 rueda delantera libre  -->
+<robot name="triciclo_test"> 
+
+<!-- Definicion de colores para visualizacion en Rviz y Gazebo -->
+<!-- Rojo para rueda delantera -->
+  <material name="rojo"><color rgba="1 0 0 1"/></material>  
+<!-- Verde para rueda trasera izquierda -->
+  <material name="verde"><color rgba="0 1 0 1"/></material> 
+<!-- Azul para rueda trasera derecha -->
+  <material name="azul"><color rgba="0 0 1 1"/></material>    
+<!-- Gris para el chasis y horquilla -->
+  <material name="gris"><color rgba="0.5 0.5 0.5 1"/></material> 
+
+<!-- Chasis principal del robot: base en donde se conectan las ruedas y la horquilla, su forma define la estructura del robot -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.38" rpy="0 0 0"/>
+      <geometry>
+        <box size="1.2 0.6 0.12"/>
+      </geometry>
+      <material name="gris"/>
+    </visual>
+    <collision>
+     <origin xyz="0 0 0.38"/>
+     <geometry>
+      <box size="1.2 0.6 0.12"/>
+     </geometry>
+    </collision>
+  </link>
+
+<!-- Horquilla delantera en forma de U que permite la direccion: Se compone de  dos brazos verticales y una barra horizontal superior que los une. Esta horquilla rota con respecto del chasis mediante el joint "direccion"  -->
+  <link name="horquilla">
+<!-- Brazo vertical izquierdo -->
+    <visual>
+      <origin xyz="0 0.07 0.115"/>
+      <geometry>
+        <box size="0.02 0.02 0.19"/>
+      </geometry>
+      <material name="gris"/>
+    </visual>
+<!-- Brazo vertical derecho -->
+    <visual>
+      <origin xyz="0 -0.07 0.115"/>
+      <geometry>
+        <box size="0.02 0.02 0.19"/>
+      </geometry>
+      <material name="gris"/>
+    </visual>  
+<!-- Barra horizontal superior que une los brazos -->
+    <visual>
+      <origin xyz="0 0 0.213"/>
+      <geometry>
+        <box size="0.02 0.16 0.014"/>
+      </geometry>
+      <material name="gris"/>
+    </visual>
+
+<!-- Colisiones de las partes de la horquilla -->
+<!-- Colision brazo derecho --> 
+    <collision>
+      <origin xyz="0 0.07 0.115"/>
+      <geometry>
+        <box size="0.02 0.02 0.19"/>
+      </geometry>
+    </collision>
+<!-- Colision brazo izquierdo -->
+    <collision>
+      <origin xyz="0 -0.07 0.115"/>
+      <geometry>
+        <box size="0.02 0.02 0.19"/>
+      </geometry>
+    </collision>
+<!-- Colision barra superior -->
+    <collision>
+      <origin xyz="0 0 0.213"/>
+      <geometry>
+        <box size="0.02 0.16 0.014"/>
+      </geometry>
+    </collision>
+  </link>
+
+<!-- Joint: Chasis → Horquilla (dirección): Articulacion tipo "revolute" que permite la rotacion de la horquilla respecto al chasis, su eje de rotacion esta en Z, el cual limita el giro entre -90° y 90°  -->
+  <joint name="direccion" type="revolute">
+    <parent link="base_link"/>
+    <child link="horquilla"/>
+    <origin xyz="0.6 0 0.10"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+  </joint>
+
+<!-- Rueda delantera: esta conectada a la horquilla, gira libremente  -->
+  <link name="rueda_delantera">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.15" length="0.1"/>
+      </geometry>
+      <material name="rojo"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.15" length="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+
+<!-- Joint: Horquilla → Rueda delantera: conexion de la rueda delantera respecto a la horquilla -->
+  <joint name="giro_rueda_delantera" type="continuous">
+    <parent link="horquilla"/>
+    <child link="rueda_delantera"/>
+    <origin xyz="0 0 0.05"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+<!-- Rueda trasera izquierda: para propulsion, esta conectada al chasis -->
+  <link name="rueda_izquierda">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.37" length="0.1"/>
+      </geometry>
+      <material name="verde"/>
+    </visual>
+    <collision>
+     <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+     <geometry>
+        <cylinder radius="0.37" length="0.1"/>
+     </geometry>
+    </collision>
+  </link>
+  
+<!-- Joint: Chasis → Rueda trasera izquierda: joint de propulsion, gira libremente sobre el eje Y -->
+  <joint name="propulsion_izq" type="continuous">
+    <parent link="base_link"/>
+    <child link="rueda_izquierda"/>
+    <origin xyz="-0.5 0.35 0.37" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+<!-- Rueda trasera derecha: para propulsion, esta conectada al chasis -->
+  <link name="rueda_derecha">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.37" length="0.1"/>
+      </geometry>
+      <material name="azul"/>
+    </visual>
+    <collision>
+     <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+     <geometry>
+        <cylinder radius="0.37" length="0.1"/>
+     </geometry>
+    </collision>
+  </link>
+
+<!-- Joint: Chasis → Rueda trasera derecha: joint de propulsion, gira libremente sobre el eje Y -->
+  <joint name="propulsion_der" type="continuous">
+    <parent link="base_link"/>
+    <child link="rueda_derecha"/>
+    <!-- Detrás y a la derecha -->
+    <origin xyz="-0.5 -0.35 0.37" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+</robot>
+

@@ -1,0 +1,15 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 50
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    vel_triciclo_controller:
+      type: velocity_controllers/JointGroupVelocityController
+      joints: [propulsion_izq, propulsion_der]
+
+    pos_direccion_controller:
+      type: position_controllers/JointGroupPositionController
+      joints: [direccion]
+

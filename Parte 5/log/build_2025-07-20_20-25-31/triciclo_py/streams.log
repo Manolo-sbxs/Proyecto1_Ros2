@@ -1,0 +1,22 @@
+[5.196s] Invoking command in '/home/user/Escritorio/ros/src/triciclo_py': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/user/Escritorio/ros/build/triciclo_py/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/Escritorio/ros/install/triciclo_py/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/triciclo_py build --build-base /home/user/Escritorio/ros/build/triciclo_py/build install --record /home/user/Escritorio/ros/build/triciclo_py/install.log --single-version-externally-managed install_data
+[6.376s] running egg_info
+[6.459s] writing ../../build/triciclo_py/triciclo_py.egg-info/PKG-INFO
+[6.461s] writing dependency_links to ../../build/triciclo_py/triciclo_py.egg-info/dependency_links.txt
+[6.463s] writing entry points to ../../build/triciclo_py/triciclo_py.egg-info/entry_points.txt
+[6.465s] writing requirements to ../../build/triciclo_py/triciclo_py.egg-info/requires.txt
+[6.465s] writing top-level names to ../../build/triciclo_py/triciclo_py.egg-info/top_level.txt
+[6.719s] reading manifest file '../../build/triciclo_py/triciclo_py.egg-info/SOURCES.txt'
+[6.722s] writing manifest file '../../build/triciclo_py/triciclo_py.egg-info/SOURCES.txt'
+[6.723s] running build
+[6.723s] running build_py
+[6.724s] running install
+[6.736s] running install_lib
+[6.821s] running install_data
+[6.821s] running install_egg_info
+[6.888s] removing '/home/user/Escritorio/ros/install/triciclo_py/lib/python3.12/site-packages/triciclo_py-0.0.0-py3.12.egg-info' (and everything under it)
+[6.891s] Copying ../../build/triciclo_py/triciclo_py.egg-info to /home/user/Escritorio/ros/install/triciclo_py/lib/python3.12/site-packages/triciclo_py-0.0.0-py3.12.egg-info
+[6.909s] running install_scripts
+[7.403s] Installing demo_movimiento script to /home/user/Escritorio/ros/install/triciclo_py/lib/triciclo_py
+[7.404s] Installing mover_robot_cmdvel_rosgz script to /home/user/Escritorio/ros/install/triciclo_py/lib/triciclo_py
+[7.404s] writing list of installed files to '/home/user/Escritorio/ros/build/triciclo_py/install.log'
+[7.487s] Invoked command in '/home/user/Escritorio/ros/src/triciclo_py' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/user/Escritorio/ros/build/triciclo_py/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/user/Escritorio/ros/install/triciclo_py/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/triciclo_py build --build-base /home/user/Escritorio/ros/build/triciclo_py/build install --record /home/user/Escritorio/ros/build/triciclo_py/install.log --single-version-externally-managed install_data

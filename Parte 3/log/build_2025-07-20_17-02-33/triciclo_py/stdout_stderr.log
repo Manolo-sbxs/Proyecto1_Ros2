@@ -1,0 +1,18 @@
+running egg_info
+writing ../../build/triciclo_py/triciclo_py.egg-info/PKG-INFO
+writing dependency_links to ../../build/triciclo_py/triciclo_py.egg-info/dependency_links.txt
+writing requirements to ../../build/triciclo_py/triciclo_py.egg-info/requires.txt
+writing top-level names to ../../build/triciclo_py/triciclo_py.egg-info/top_level.txt
+reading manifest file '../../build/triciclo_py/triciclo_py.egg-info/SOURCES.txt'
+writing manifest file '../../build/triciclo_py/triciclo_py.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+running install_data
+copying launch/display.launch.py -> /home/user/Escritorio/ejemplos/final/Parte 3/install/triciclo_py/share/triciclo_py/launch
+running install_egg_info
+removing '/home/user/Escritorio/ejemplos/final/Parte 3/install/triciclo_py/lib/python3.12/site-packages/triciclo_py-0.0.0-py3.12.egg-info' (and everything under it)
+Copying ../../build/triciclo_py/triciclo_py.egg-info to /home/user/Escritorio/ejemplos/final/Parte 3/install/triciclo_py/lib/python3.12/site-packages/triciclo_py-0.0.0-py3.12.egg-info
+running install_scripts
+writing list of installed files to '/home/user/Escritorio/ejemplos/final/Parte 3/build/triciclo_py/install.log'

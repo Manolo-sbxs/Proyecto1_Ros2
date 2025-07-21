@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="triciclo_test">
+
+  <!-- ======================================== -->
+  <!-- Parámetros generales                    -->
+  <!-- ======================================== -->
+
+  <!-- Dimensiones -->
+  <xacro:property name="radio_rueda_delantera" value="0.15"/>
+  <xacro:property name="radio_rueda_trasera" value="0.37"/>
+  <xacro:property name="largo_rueda" value="0.1"/>
+  <xacro:property name="ancho_chasis" value="0.6"/>
+  <xacro:property name="largo_chasis" value="1.2"/>
+  <xacro:property name="alto_chasis" value="0.12"/>
+  <xacro:property name="altura_chasis" value="0.38"/>
+  <xacro:property name="largo_horquilla" value="0.19"/>
+  <xacro:property name="ancho_brazo_horquilla" value="0.02"/>
+  <xacro:property name="alto_barra_superior" value="0.014"/>
+
+  <!-- Colores -->
+  <material name="rojo"><color rgba="1 0 0 1"/></material>
+  <material name="verde"><color rgba="0 1 0 1"/></material>
+  <material name="azul"><color rgba="0 0 1 1"/></material>
+  <material name="gris"><color rgba="0.5 0.5 0.5 1"/></material>
+
+  <!-- ======================================== -->
+  <!-- Macros reutilizables                    -->
+  <!-- ======================================== -->
+
+  <!-- Macro para una rueda -->
+  <xacro:macro name="rueda" params="nombre color radio">
+    <link name="${nombre}">
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <geometry>
+          <cylinder radius="${radio}" length="${largo_rueda}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <geometry>
+          <cylinder radius="${radio}" length="${largo_rueda}"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <!-- ======================================== -->
+  <!-- Estructura principal del robot          -->
+  <!-- ======================================== -->
+
+  <!-- Chasis principal del robot -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 ${altura_chasis}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${largo_chasis} ${ancho_chasis} ${alto_chasis}"/>
+      </geometry>
+      <material name="gris"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${altura_chasis}"/>
+      <geometry>
+        <box size="${largo_chasis} ${ancho_chasis} ${alto_chasis}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Horquilla delantera -->
+  <link name="horquilla">
+    <!-- Brazo izquierdo -->
+    <visual>
+      <origin xyz="0 0.07 0.115"/>
+      <geometry>
+        <box size="${ancho_brazo_horquilla} ${ancho_brazo_horquilla} ${largo_horquilla}"/>
+      </geometry>
+      <material name="gris"/>
+    </visual>
+    <!-- Brazo derecho -->
+    <visual>
+      <origin xyz="0 -0.07 0.115"/>
+      <geometry>
+        <box size="${ancho_brazo_horquilla} ${ancho_brazo_horquilla} ${largo_horquilla}"/>
+      </geometry>
+      <material name="gris"/>
+    </visual>
+    <!-- Barra superior -->
+    <visual>
+      <origin xyz="0 0 0.213"/>
+      <geometry>
+        <box size="${ancho_brazo_horquilla} 0.16 ${alto_barra_superior}"/>
+      </geometry>
+      <material name="gris"/>
+    </visual>
+
+    <!-- Colisiones -->
+    <collision>
+      <origin xyz="0 0.07 0.115"/>
+      <geometry>
+        <box size="${ancho_brazo_horquilla} ${ancho_brazo_horquilla} ${largo_horquilla}"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 -0.07 0.115"/>
+      <geometry>
+        <box size="${ancho_brazo_horquilla} ${ancho_brazo_horquilla} ${largo_horquilla}"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 0.213"/>
+      <geometry>
+        <box size="${ancho_brazo_horquilla} 0.16 ${alto_barra_superior}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint: chasis a horquilla -->
+  <joint name="direccion" type="revolute">
+    <parent link="base_link"/>
+    <child link="horquilla"/>
+    <origin xyz="0.6 0 0.10"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- Rueda delantera -->
+  <xacro:rueda nombre="rueda_delantera" color="rojo" radio="${radio_rueda_delantera}"/>
+
+  <!-- Joint: horquilla a rueda delantera -->
+  <joint name="giro_rueda_delantera" type="continuous">
+    <parent link="horquilla"/>
+    <child link="rueda_delantera"/>
+    <origin xyz="0 0 0.05"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Rueda trasera izquierda -->
+  <xacro:rueda nombre="rueda_izquierda" color="verde" radio="${radio_rueda_trasera}"/>
+
+  <!-- Joint: chasis a rueda trasera izquierda -->
+  <joint name="propulsion_izq" type="continuous">
+    <parent link="base_link"/>
+    <child link="rueda_izquierda"/>
+    <origin xyz="-0.5 0.35 0.37" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Rueda trasera derecha -->
+  <xacro:rueda nombre="rueda_derecha" color="azul" radio="${radio_rueda_trasera}"/>
+
+  <!-- Joint: chasis a rueda trasera derecha -->
+  <joint name="propulsion_der" type="continuous">
+    <parent link="base_link"/>
+    <child link="rueda_derecha"/>
+    <origin xyz="-0.5 -0.35 0.37" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+</robot>
